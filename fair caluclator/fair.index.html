@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyHub Taxi Fare Calculator</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #009688;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #009688;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #00796b;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>MyHub Taxi Fare Calculator</h1>
+    <form id="fareCalculator">
+        <div>
+            <label for="initialFare">Initial Fare:</label>
+            <input type="number" id="initialFare" name="initialFare" value="">
+        </div>
+        <div>
+            <label for="perKmFare">Per Kilometer Fare:</label>
+            <input type="number" id="perKmFare" name="perKmFare" value="">
+        </div>
+        <div>
+            <label for="perMinFare">Per Minute Fare:</label>
+            <input type="number" id="perMinFare" name="perMinFare" value="">
+        </div>
+        <div>
+            <label for="freeDistance">Free Distance (km):</label>
+            <input type="number" id="freeDistance" name="freeDistance" value="">
+        </div>
+        <div>
+            <label for="kmIncreaseFare">Kilometer Increase Fare:</label>
+            <input type="number" id="kmIncreaseFare" name="kmIncreaseFare" value="">
+        </div>
+        <div>
+            <label for="fareAfterSpecificKm">Fare After Specific Kilometer:</label>
+            <input type="number" id="fareAfterSpecificKm" name="fareAfterSpecificKm" value="">
+        </div>
+        <div>
+            <label for="totalKm">Total Kilometers:</label>
+            <input type="number" id="totalKm" name="totalKm" value="">
+        </div>
+        <div>
+            <label for="time">Time (minutes):</label>
+            <input type="number" id="time" name="time" value="">
+        </div>
+        <button type="button" onclick="calculateFare()">Calculate Fare</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function calculateFare() {
+            // Retrieve input values
+            var initialFare = parseFloat(document.getElementById('initialFare').value);
+            var perKmFare = parseFloat(document.getElementById('perKmFare').value);
+            var perMinFare = parseFloat(document.getElementById('perMinFare').value);
+            var freeDistance = parseFloat(document.getElementById('freeDistance').value);
+            var kmIncreaseFare = parseFloat(document.getElementById('kmIncreaseFare').value);
+            var fareAfterSpecificKm = parseFloat(document.getElementById('fareAfterSpecificKm').value);
+            var totalKm = parseFloat(document.getElementById('totalKm').value);
+            var time = parseFloat(document.getElementById('time').value);
+
+            // Perform calculations
+            var calculatedKm = totalKm - freeDistance;
+            var timeFare = time * perMinFare;
+            var remaning_km = calculatedKm - kmIncreaseFare
+            var result = initialFare + timeFare + (kmIncreaseFare * perKmFare) + remaning_km * fareAfterSpecificKm;
+            var tax = (result * 5) / 100;
+            var totalFare = result + tax;
+
+            // Display result
+            document.getElementById('result').innerHTML = "Total Fare (including 5% tax): RS." + totalFare.toFixed(2);
+        }
+    </script>
+</body>
+</html>
